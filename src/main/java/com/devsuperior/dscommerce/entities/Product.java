@@ -88,4 +88,17 @@ public class Product {
 
     public List<Order> getOrders() {return items.stream().map(x -> x.getOrder()).toList();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+        return id == product.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
