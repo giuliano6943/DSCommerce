@@ -1,0 +1,27 @@
+package com.devsuperior.dscommerce.services;
+
+import com.devsuperior.dscommerce.dto.ProductDTO;
+import com.devsuperior.dscommerce.entities.Product;
+import com.devsuperior.dscommerce.repositories.ProductRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+public class ProductService {
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Transactional(readOnly = true)
+    //O retorno do metodo precisa ser DTO, pois não queremos mandar entidade do banco de dados para o controller
+    public ProductDTO findById(Long id) {
+        Optional<Product> result = productRepository.findById(id);
+        Product product = result.get();
+        ProductDTO dto = new ProductDTO(product);
+        return dto;
+    }
+}
