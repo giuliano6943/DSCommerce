@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     @Column(columnDefinition = "TEXT") //--> Dizendo para o banco que será um texto longo, não somente um var char de 200
     private String description;
@@ -30,7 +31,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(int id, String name, String description, Double price, String imgUrl) {
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -38,11 +39,11 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -94,11 +95,11 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
 
         Product product = (Product) o;
-        return id == product.id;
+        return Objects.equals(id, product.id);
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hashCode(id);
     }
 }
