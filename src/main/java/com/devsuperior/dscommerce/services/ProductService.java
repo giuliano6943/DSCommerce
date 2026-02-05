@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,13 +43,26 @@ public class ProductService {
 
         //Instanciando um objeto da entidade Product e atribuindo as variáveis dela as variáveis recebidas no JSON que foram atribuidas ao DTO
         Product entity = new Product();
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-        entity.setPrice(dto.getPrice());
-        entity.setImgUrl(dto.getImgUrl());
+        copyDtoToEntity(dto,entity);
         //Salvando no Banco de dados
         entity = productRepository.save(entity);
         //Retornando o DTO
         return new ProductDTO(entity);
+    }
+
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO dto) {
+
+        Product entity = productRepository.getReferenceById(id);
+        copyDtoToEntity(dto,entity);
+        entity = productRepository.save(entity);
+        return new ProductDTO(entity);
+    }
+
+    private void copyDtoToEntity(ProductDTO dto, Product entity) {
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
     }
 }

@@ -36,6 +36,7 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
+//Criar um novo produto
     @PostMapping()
     public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto){
         dto = service.insert(dto);
@@ -43,6 +44,11 @@ public class ProductController {
                 .buildAndExpand(dto.getId()).toUri();
         //Retornando o código 201 Created + o link do objeto criado no header.
         return ResponseEntity.created(uri).body(dto);
+    }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto ){
+        dto = service.update(id,dto);
+        return ResponseEntity.ok(dto); //Customizando a resposta do metodo, no caso essa é 200OK
     }
 }
