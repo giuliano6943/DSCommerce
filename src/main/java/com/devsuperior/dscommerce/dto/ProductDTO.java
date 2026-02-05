@@ -19,6 +19,7 @@ public class ProductDTO {
         this.price = price;
         this.imgUrl = imgUrl;
     }
+    //trazendo para as variáveis da classe DTO todos os dados da entidade.
     public ProductDTO(Product entity) {
         id = entity.getId();
         name = entity.getName();
@@ -26,6 +27,8 @@ public class ProductDTO {
         price = entity.getPrice();
         imgUrl = entity.getImgUrl();
     }
+
+    //Só métodos getters
 
     public Long getId() {
         return id;
