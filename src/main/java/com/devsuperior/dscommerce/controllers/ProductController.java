@@ -51,4 +51,10 @@ public class ProductController {
         dto = service.update(id,dto);
         return ResponseEntity.ok(dto); //Customizando a resposta do metodo, no caso essa é 200OK
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+      service.delete(id);
+      return ResponseEntity.noContent().build();
+    }
 }
