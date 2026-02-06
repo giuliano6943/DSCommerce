@@ -4,6 +4,7 @@ import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.entities.Product;
 import com.devsuperior.dscommerce.repositories.ProductRepository;
 
+import com.devsuperior.dscommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +25,9 @@ public class ProductService {
     @Transactional(readOnly = true)
     //O retorno do metodo precisa ser DTO, pois não queremos mandar entidade do banco de dados para o controller
     public ProductDTO findById(Long id) {
-        Optional<Product> result = productRepository.findById(id);
-        Product product = result.get();
-        ProductDTO dto = new ProductDTO(product);
-        return dto;
+        Product product= productRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado"));
+        return new ProductDTO(product);
     }
     //Metodo para pesquisar todos os produtos salvos
     //É utilizado o tipo Page para que o a classe Pageable seja chamada como parâmetro, com isso, podemos dividir os produtos em paginas.
