@@ -26,15 +26,17 @@ public class ProductController {
     @Autowired
     private ProductService service;
 //Pesquisar produto por id
-    @GetMapping(value = "/{id}")
+        @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id){
         ProductDTO dto = service.findById(id);
         return ResponseEntity.ok(dto); //Customizando a resposta do metodo, no caso essa é 200OK
     }
 //Listar todos os produtos no modo de páginas.
     @GetMapping()
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable){
-        Page<ProductDTO> dto = service.findAll(pageable);
+    public ResponseEntity<Page<ProductDTO>> findAll(
+            @RequestParam(name = "name", defaultValue = "") String name,
+            Pageable pageable){
+        Page<ProductDTO> dto = service.findAll(name,pageable);
         return ResponseEntity.ok(dto);
     }
 
@@ -49,7 +51,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id,@Valid @RequestBody ProductDTO dto ){
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id,@Valid @RequestBody ProductDTO dto){
         dto = service.update(id,dto);
         return ResponseEntity.ok(dto); //Customizando a resposta do metodo, no caso essa é 200OK
     }

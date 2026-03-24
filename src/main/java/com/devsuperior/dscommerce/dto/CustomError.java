@@ -2,6 +2,7 @@ package com.devsuperior.dscommerce.dto;
 
 import java.time.Instant;
 
+//Classe que define o formato básico da mensagem de erro.
 public class CustomError {
     private Instant timestamp;
     private Integer status;

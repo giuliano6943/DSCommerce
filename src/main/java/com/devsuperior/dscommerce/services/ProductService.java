@@ -36,9 +36,9 @@ public class ProductService {
     //Metodo para pesquisar todos os produtos salvos
     //É utilizado o tipo Page para que o a classe Pageable seja chamada como parâmetro, com isso, podemos dividir os produtos em paginas.
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        Page<Product> result = productRepository.findAll(pageable);
-        return result.map(x->new ProductDTO(x));
+    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+        Page<Product> result = productRepository.searchByName(name,pageable);
+        return result.map(x-> new ProductDTO(x));
     }
 
     //Metodo insert para criar um novo produto
