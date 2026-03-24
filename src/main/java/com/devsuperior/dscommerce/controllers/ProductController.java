@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -41,6 +42,7 @@ public class ProductController {
     }
 
 //Criar um novo produto
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping()
     public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto){
         dto = service.insert(dto);
@@ -49,13 +51,13 @@ public class ProductController {
         //Retornando o código 201 Created + o link do objeto criado no header.
         return ResponseEntity.created(uri).body(dto);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable Long id,@Valid @RequestBody ProductDTO dto){
         dto = service.update(id,dto);
         return ResponseEntity.ok(dto); //Customizando a resposta do metodo, no caso essa é 200OK
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
       service.delete(id);
