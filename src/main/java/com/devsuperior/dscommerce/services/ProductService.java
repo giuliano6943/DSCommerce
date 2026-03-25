@@ -1,6 +1,7 @@
 package com.devsuperior.dscommerce.services;
 
 import com.devsuperior.dscommerce.dto.ProductDTO;
+import com.devsuperior.dscommerce.dto.ProductMinDTO;
 import com.devsuperior.dscommerce.entities.Product;
 import com.devsuperior.dscommerce.repositories.ProductRepository;
 
@@ -36,9 +37,9 @@ public class ProductService {
     //Metodo para pesquisar todos os produtos salvos
     //É utilizado o tipo Page para que o a classe Pageable seja chamada como parâmetro, com isso, podemos dividir os produtos em paginas.
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> result = productRepository.searchByName(name,pageable);
-        return result.map(x-> new ProductDTO(x));
+        return result.map(x-> new ProductMinDTO(x));
     }
 
     //Metodo insert para criar um novo produto
