@@ -10,7 +10,7 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
 
     @ManyToMany(mappedBy = "categories")
@@ -18,16 +18,16 @@ public class Category {
 
     public Category() {}
 
-    public Category(int id, String name) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,15 +44,9 @@ public class Category {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Category category = (Category) o;
-        return id == category.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                '}';
     }
 }
